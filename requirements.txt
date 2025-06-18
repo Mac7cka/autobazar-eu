@@ -1,4 +1,8 @@
 selenium
+undetected-chromedriver
+fake-useragent
 pandas
 openpyxl
 python-dotenv
+
+
