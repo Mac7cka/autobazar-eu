@@ -64,9 +64,27 @@ def click_on_next_btn_pagination(driver):
         )
 
     except TimeoutException:
-        print("⏳ No 'Ďalšie inzeráty' button found or clickable.")
-    except Exception as e:
-        print(f"❌ Failed to click next page: {e}")
+        print("⏳ No 'Ďalšie inzeráty' button found using XPath. Attempting CSS selector fallback...")
+        try:
+            button = driver.find_element(By.CSS_SELECTOR,
+                                         "a[href*='/vysledky/osobne-vozidla/volkswagen'][class*='cursor-pointer']")
+
+            driver.execute_script("arguments[0].scrollIntoView(true);", button)  # Ensure visibility
+            time.sleep(random.uniform(0.3, 0.6))  # Slight delay
+            ActionChains(driver).move_to_element(button).click().perform()
+            time.sleep(LOADING_TIME)
+
+            print("✅ Fallback button click successful!")
+
+            # Wait for listings to reload
+            WebDriverWait(driver, 10).until(
+                EC.presence_of_element_located((By.CLASS_NAME, "Listingsstyled__List-sc-1iabgue-0"))
+            )
+
+        except NoSuchElementException:
+            print("❌ Fallback button not found using CSS selector.")
+        except Exception as e:
+            print(f"❌ Unexpected error clicking fallback button: {e}")
 
 
 def last_card_is_from_today(driver):
