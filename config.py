@@ -1,0 +1,13 @@
+# Constants
+LOADING_TIME = 2
+LOADING_TIME_FOR_LISTING = 0.3
+URL = "https://www.autobazar.eu/"
+
+BRAND = "volkswagen"
+MODELS = [34932, 34930, 349240, 34923, 34924, 35292]
+MIN_YEAR = 2015
+MAX_PRICE = 10000
+MAX_MILEAGE = 300000
+
+
+
